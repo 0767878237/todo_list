@@ -10,199 +10,50 @@ st.set_page_config(
 )
 
 # --- CSS Tùy chỉnh để nâng cấp giao diện ---
-st.markdown("""
-<style>
-    /* --- Giao diện chung --- */
-    body {
-        background-color: #FFFFFF; /* Nền trắng */
-    }
-    .stApp {
-        background-color: #FFFFFF !important; /* Nền trắng (buộc) */
-        color: #111111 !important; /* Chữ đen (buộc) */
-    }
-    /* Buộc nhãn của ô nhập liệu có màu tối */
-    .stTextInput > label, .stDateInput > label {
-        color: #111111 !important;
-    }
-    /* SỬA LỖI: Buộc các ô input có nền trắng, chữ đen */
-    .stTextInput input, .stDateInput div[data-testid="stDateInput"] {
-        background-color: #FFFFFF !important;
-        color: #111111 !important;
-        border: 1px solid #E0E0E0 !important;
-        border-radius: 5px !important;
-    }
-    .stTextInput input:focus, .stDateInput div[data-testid="stDateInput"]:focus-within {
-        border-color: #007BFF !important; /* Thêm highlight khi focus */
-        box-shadow: 0 0 0 1px #007BFF !important;
-    }
+def local_css(file_name):
+    try:
+        with open(file_name, encoding="utf-8") as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.error(f"Tệp CSS '{file_name}' không tìm thấy. Hãy chắc chắn rằng nó ở cùng thư mục với 'app.py'.")
 
-    /* --- Tùy chỉnh Sidebar --- */
-    section[data-testid="stSidebar"] {
-        background-color: #F0F2F6 !important; /* SỬA: Nền xám nhạt để nổi bật */
-    }
-    div[data-testid="stSidebarUserContent"] {
-        padding-top: 2rem;
-        background-color: #F0F2F6; /* SỬA: Nền xám nhạt */
-        color: #333 !important; 
-    }
-    /* SỬA LỖI: Tiêu đề sidebar (Quản lý danh sách) */
-    div[data-testid="stSidebarUserContent"] h1 {
-        color: #111111 !important;
-        background: none !important;
-        padding: 0 !important;
-        font-size: 1.75rem !important;
-        text-align: left !important;
-        margin: 0 !important; /* Reset margin */
-    }
-    /* SỬA LỖI: Buộc nhãn trong form sidebar có màu tối */
-    div[data-testid="stSidebarUserContent"] .stTextInput > label {
-        color: #333 !important;
-    }
-    /* SỬA LỖI: Nút bấm trong sidebar form */
-    div[data-testid="stSidebarUserContent"] .stButton button {
-        background-color: #007BFF !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 5px !important;
-        padding: 8px 0px !important;
-        width: 100% !important;
-    }
-    div[data-testid="stSidebarUserContent"] .stButton button:hover {
-        background-color: #0056b3 !important;
-    }
-    
-    /* --- Tùy chỉnh st.radio trong sidebar để trông giống Menu --- */
-    div[data-testid="stRadio"] label {
-        display: block;
-        padding: 12px 20px;
-        border-radius: 8px;
-        margin-bottom: 5px;
-        font-weight: 500;
-        font-size: 1.1rem;
-        color: #333 !important; /* SỬA LỖI: Buộc chữ màu tối */
-        transition: background-color 0.2s, color 0.2s;
-        /* MỚI: Cho phép tên dài xuống dòng */
-        white-space: normal;
-        word-break: break-word;
-    }
-    /* Khi một mục được chọn */
-    div[data-testid="stRadio"] input:checked + label {
-        background-color: #e6f7ff; 
-        color: #007BFF !important; /* SỬA LỖI: Buộc chữ màu xanh */
-        font-weight: bold;
-    }
-    /* SỬA: Khi di chuột qua (trên nền xám) */
-    div[data-testid="stRadio"] label:hover {
-        background-color: #FFFFFF; /* SỬA: Nền trắng khi di chuột */
-        color: #007BFF !important; 
-    }
-    /* SỬA LỖI: Buộc ẩn dấu chấm tròn của radio button */
-    div[data-testid="stRadio"] input[type="radio"] {
-        display: none !important; 
-    }
-
-    /* --- Tiêu đề chính (Header) --- */
-    /* SỬA LỖI: Chỉ target h1 trong main content */
-    div[data-testid="stAppViewContainer"] > div > section[data-testid="stBlock"] h1 {
-        background-color: #003366; /* GIỮ NGUYÊN: Nền xanh đậm */
-        color: white;
-        padding: 1.5rem 2rem;
-        border-radius: 10px;
-        text-align: left;
-        font-weight: bold;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        margin-top: -50px; 
-    }
-
-    /* --- Form nhập liệu --- */
-    div[data-testid="stForm"] {
-        background-color: #F0F2F6; /* Nền xám nhạt */
-        padding: 25px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Giảm nhẹ shadow */
-    }
-            
-    /* --- Nút bấm chính (Thêm công việc) --- */
-    div[data-testid="stForm"] .stButton button {
-        background-color: #007BFF; 
-        color: white;
-        border-radius: 5px;
-        border: none;
-        padding: 10px 0px;
-        width: 100%;
-        font-weight: bold;
-    }
-    div[data-testid="stForm"] .stButton button:hover {
-        background-color: #0056b3;
-    }
-    
-    /* --- Tạo kiểu cho các card công việc (nền xám nhạt) --- */
-    div[data-testid="stVerticalBlockBorderWrapper"] {
-         background-color: #F0F2F6; /* Nền xám nhạt */
-         border: 1px solid #E0E0E0 !important; /* Border xám nhạt hơn */
-         border-radius: 10px !important;
-         padding: 0.5rem 1rem 1rem 1rem; /* Thêm padding bên trong card */
-    }
-    
-    /* --- Class CSS cho Deadline --- */
-    .deadline-overdue { color: #D32F2F; font-weight: bold; text-align: center; }
-    .deadline-today { color: #F57C00; font-weight: bold; text-align: center; }
-    .deadline-normal { color: #6c757d; text-align: center; }
-
-    /* --- Gạch ngang chữ khi task hoàn thành --- */
-    div[data-testid="stCheckbox"] input:checked + label {
-        text-decoration: line-through;
-        color: #6c757d; 
-    }
-
-    /* --- Tùy chỉnh st.info --- */
-    div[data-testid="stInfo"] {
-        background-color: #e6f7ff !important; 
-        border: 1px solid #b0e0ff !important; 
-        color: #003366 !important; /* SỬA LỖI: Buộc màu chữ ở đây */
-        border-radius: 5px !important;
-    }
-    div[data-testid="stInfo"] p { 
-        color: #003366 !important; /* ...và ở đây cho chắc */
-    }
-</style>
-""", unsafe_allow_html=True)
+local_css("style.css")
 
 
 # --- Khởi tạo Session State cho nhiều danh sách ---
 if "projects" not in st.session_state:
     # Khởi tạo với 3 danh sách mẫu
     st.session_state.projects = {
-        "Hôm nay": [],
-        "Công việc": [],
-        "Mua sắm": []
+        "🗓️ Hôm nay": [],
+        "💼 Công việc": [],
+        "🛒 Mua sắm": []
     }
 if "current_project" not in st.session_state:
-    st.session_state.current_project = "Hôm nay" # Đặt nhóm mặc định
+    st.session_state.current_project = "🗓️ Hôm nay" # Đặt danh sách mặc định
 
 # Thêm state để theo dõi công việc đang được chỉnh sửa
 if "editing_task_key" not in st.session_state:
     st.session_state.editing_task_key = None
 
 # --- ================== SIDEBAR ================== ---
-st.sidebar.title("Nhóm công việc")
+st.sidebar.title("Quản lý danh sách") # Đây là 'h1' trong sidebar
 
-# Form để thêm nhóm mới
+# Form để thêm danh sách mới
 with st.sidebar.form("new_project_form"):
-    new_project_name = st.text_input("Nhóm mới")
-    submitted_project = st.form_submit_button("➕ Thêm nhóm")
+    new_project_name = st.text_input("Tên danh sách mới")
+    submitted_project = st.form_submit_button("➕ Thêm danh sách")
     if submitted_project and new_project_name:
         if new_project_name not in st.session_state.projects:
             st.session_state.projects[new_project_name] = []
             st.sidebar.success(f"Đã thêm '{new_project_name}'!")
         else:
-            st.sidebar.error("Nhóm này đã tồn tại.")
+            st.sidebar.error("Danh sách này đã tồn tại.")
 
 st.sidebar.write("---")
 
 # === MỚI: Logic hiển thị st.radio với số lượng công việc ===
-project_names_formatted = [] # Nhóm tên để hiển thị (ví dụ: "Công việc (3)")
-project_names_clean = []     # Nhóm tên gốc (ví dụ: "Công việc")
+project_names_formatted = [] # Danh sách tên để hiển thị (ví dụ: "Công việc (3)")
+project_names_clean = []     # Danh sách tên gốc (ví dụ: "Công việc")
 
 # Đảm bảo `current_project` vẫn tồn tại, nếu không thì reset
 if st.session_state.current_project not in st.session_state.projects:
@@ -214,7 +65,7 @@ if st.session_state.current_project not in st.session_state.projects:
 # Tìm index của dự án hiện tại
 current_project_index = 0
 try:
-    # Tạo Nhóm tên và đếm số công việc
+    # Tạo danh sách tên và đếm số công việc
     for i, (name, tasks) in enumerate(st.session_state.projects.items()):
         # Đếm số task chưa hoàn thành
         incomplete_tasks = sum(1 for task in tasks if not task['completed'])
@@ -231,15 +82,15 @@ try:
             current_project_index = i
             
 except Exception as e:
-    st.error(f"Lỗi khi tải nhóm: {e}") # Xử lý lỗi nếu có
+    st.error(f"Lỗi khi tải danh sách: {e}") # Xử lý lỗi nếu có
 
 
 if st.session_state.current_project:
     selected_project_formatted = st.sidebar.radio(
-        "Chọn nhóm:",
+        "Chọn danh sách:",
         project_names_formatted,
         index=current_project_index, # Đặt mục đang chọn
-        label_visibility="collapsed" # Ẩn nhãn "Chọn nhóm:"
+        label_visibility="collapsed" # Ẩn nhãn "Chọn danh sách:"
     )
     
     # Lấy index của lựa chọn mới
@@ -255,13 +106,14 @@ else:
 # Kiểm tra nếu không có dự án nào được chọn (trường hợp danh sách trống)
 if not st.session_state.current_project:
     st.title("Chào mừng!")
-    st.info("Hãy tạo nhóm đầu tiên của bạn ở thanh bên trái để bắt đầu.")
+    st.info("Hãy tạo danh sách đầu tiên của bạn ở thanh bên trái để bắt đầu.")
 else:
     # Lấy danh sách công việc của dự án hiện tại
     current_tasks = st.session_state.projects[st.session_state.current_project]
 
     # Tiêu đề chính
-    st.title(f"{st.session_state.current_project}")
+    st.title(f"{st.session_state.current_project}") # Đây là 'h1' trong trang chính
+
 
     # --- Form nhập liệu công việc ---
     with st.form("task_form"):
@@ -273,7 +125,7 @@ else:
 
         submitted = st.form_submit_button("Thêm Công Việc")
         if submitted and new_task:
-            # Thêm công việc vào nhóm hiện tại
+            # Thêm công việc vào ĐÚNG danh sách hiện tại
             current_tasks.append({"task": new_task, "deadline": deadline, "completed": False})
             st.rerun()
 

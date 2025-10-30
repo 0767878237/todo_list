@@ -1,0 +1,196 @@
+/* --- Giao diện chung --- */
+body {
+    background-color: #FFFFFF; 
+}
+.stApp {
+    background-color: #FFFFFF !important; 
+    color: #111111 !important; 
+}
+
+.stTextInput > label, .stDateInput > label {
+color: #111111 !important;  
+}
+
+.stTextInput input, .stDateInput div[data-testid="stDateInput"] {
+    background-color: #FFFFFF !important;
+    color: #111111 !important;
+    border: 1px solid #E0E0E0 !important;
+    border-radius: 5px !important;
+}
+.stTextInput input:focus, .stDateInput div[data-testid="stDateInput"]:focus-within {
+    border-color: #007BFF !important;
+    box-shadow: 0 0 0 1px #007BFF !important;
+}
+
+/* --- Tùy chỉnh Sidebar --- */
+section[data-testid="stSidebar"] {
+    background-color: #F0F2F6 !important;       
+}
+div[data-testid="stSidebarUserContent"] {
+    padding-top: 2rem;
+    background-color: #F0F2F6;
+    color: #333 !important; 
+}
+
+div[data-testid="stSidebarUserContent"] h1 {
+    color: #111111 !important;
+    background: none !important;
+    padding: 0 !important;
+    font-size: 1.75rem !important;
+    text-align: left !important;
+    margin: 0 !important; 
+}
+
+div[data-testid="stSidebarUserContent"] .stTextInput > label {
+    color: #333 !important;
+}
+
+div[data-testid="stSidebarUserContent"] .stButton button {
+    background-color: #007BFF !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 8px 0px !important;
+    width: 100% !important;
+    }
+div[data-testid="stSidebarUserContent"] .stButton button:hover {
+    background-color: #0056b3 !important;
+}
+
+div[data-testid="stRadio"] label {
+    display: block;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #333 !important; 
+    transition: background-color 0.2s, color 0.2s;
+    white-space: normal;
+    word-break: break-word;
+}
+
+div[data-testid="stRadio"] input:checked + label {
+    background-color: #e6f7ff; 
+    color: #007BFF !important;
+    font-weight: bold;
+}
+
+div[data-testid="stRadio"] label:hover {
+    background-color: #FFFFFF;
+    color: #007BFF !important; 
+}
+
+div[data-testid="stRadio"] input[type="radio"] {
+    display: none !important; 
+}
+
+/* --- Tiêu đề chính (Header) --- */
+div[data-testid="stAppViewContainer"] > div > section[data-testid="stBlock"] h1 {
+    background-color: #003366; 
+    color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 10px;
+    text-align: left;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-top: -50px; 
+}
+
+/* --- Form nhập liệu --- */
+div[data-testid="stForm"] {
+    background-color: #F0F2F6; 
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+    
+/* --- Nút bấm chính (Thêm công việc) --- */
+div[data-testid="stForm"] .stButton button {
+    background-color: #007BFF; 
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 0px;
+    width: 100%;
+    font-weight: bold;
+}
+div[data-testid="stForm"] .stButton button:hover {
+    background-color: #0056b3;
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    background-color: #F0F2F6; 
+    border: 1px solid #E0E0E0 !important; 
+    border-radius: 10px !important;
+    padding: 0.5rem 1rem 1rem 1rem; 
+}
+
+
+.deadline-overdue { color: #D32F2F; font-weight: bold; text-align: center; }
+.deadline-today { color: #F57C00; font-weight: bold; text-align: center; }
+.deadline-normal { color: #6c757d; text-align: center; }
+
+/* --- Gạch ngang chữ khi task hoàn thành --- */
+div[data-testid="stCheckbox"] input:checked + label {
+    text-decoration: line-through;
+    color: #6c757d; 
+}
+
+/* --- Tùy chỉnh st.info --- */
+div[data-testid="stInfo"] {
+    background-color: #e6f7ff !important; 
+    border: 1px solid #b0e0ff !important; 
+    color: #003366 !important;
+    border-radius: 5px !important;
+}
+div[data-testid="stInfo"] p { 
+    color: #003366 !important; 
+}
+
+/* --- ================== RESPONSIVE MEDIA QUERY ================== --- */
+@media (max-width: 600px) {
+    div[data-testid="stAppViewContainer"] > div > section[data-testid="stBlock"] h1 {
+        padding: 1rem 1.5rem;
+        margin-top: -30px; 
+        font-size: 1.5rem; 
+    }
+
+    div[data-testid="stForm"] {
+        padding: 15px;
+    }
+
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+            padding: 0.5rem;
+    }
+
+    div[data-testid="stRadio"] label {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+
+    div[data-testid="stForm"] .stButton button {
+        padding: 8px 0px;
+    }
+
+    div[data-testid="stVerticalBlockBorderWrapper"] .stButton button {
+        padding: 0.25rem; 
+        font-size: 0.9rem; 
+    }
+
+    div[data-testid="stCheckbox"] label {
+        font-size: 0.95rem; 
+    }
+
+    .deadline-overdue, .deadline-today, .deadline-normal {
+        font-size: 0.85rem; 
+        text-align: left; 
+        padding-left: 5px;
+    }
+
+    div[data-testid="stForm"][key^="edit_form_"] .stButton button {
+        padding: 8px 0px;
+        font-size: 0.9rem;
+    }
+}
+
